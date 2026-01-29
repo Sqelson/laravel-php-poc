@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CarrierResource extends JsonResource
@@ -12,8 +11,16 @@ class CarrierResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
-    {
-        return parent::toArray($request);
-    }
+    public function toArray($request): array
+{
+    return [
+        'carrier_name' => $this->name,
+        'shipping_cost' => [
+            'amount' => (float) $this->price,
+            'currency' => 'GBP',
+            'formatted' => '£' . number_format($this->price, 2),
+        ],
+        'max_weight_capacity' => $this->max_weight . 'kg',
+    ];
+}
 }
