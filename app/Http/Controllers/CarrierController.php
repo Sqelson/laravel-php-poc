@@ -2,23 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Carrier;
-// Import the new "Mask" and "Bouncer"
+// Imports the Service
+use App\Services\CarrierService;
+// Imports the "Mask" and "Bouncer"
 use App\Http\Resources\CarrierResource;
 use App\Http\Requests\GetShipmentRateRequest;
 
 class CarrierController extends Controller
 {
+    protected $carrierService;
+
+    // The Constructor "injects" the service into this class
+    public function __construct(CarrierService $carrierService)
+    {
+        $this->carrierService = $carrierService;
+    }
+
     public function getShipmentRate(GetShipmentRateRequest $request)
     {
         // Validation is handled automatically before this code even runs.
         // If it fails, Laravel returns a 422 error immediately.
         $weight = $request->validated()['weight'];
 
-        $carrier = Carrier::where('max_weight', '>=', $weight)
-                    ->orderBy('price', 'asc')
-                    ->first();
+        // Use the service instead of calling the Model directly
+        $carrier = $this->carrierService->findCheapestCarrier($weight);
 
         if (!$carrier) {
             return response()->json([
