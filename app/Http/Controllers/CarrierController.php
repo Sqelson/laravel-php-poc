@@ -7,6 +7,7 @@ use App\Services\CarrierService;
 // Imports the "Mask" and "Bouncer"
 use App\Http\Resources\CarrierResource;
 use App\Http\Requests\GetShipmentRateRequest;
+use App\Jobs\GenerateShippingLabel;
 
 class CarrierController extends Controller
 {
@@ -27,6 +28,10 @@ class CarrierController extends Controller
         // Use the service instead of calling the Model directly
         // Also, if this fails, the Exception handles the response automatically
         $carrier = $this->carrierService->findCheapestCarrier($weight);
+
+        // Dispatch the Job to generate the shipping label asynchronously
+        // This puts the job in the database and keeps the user waiting time minimal
+        GenerateShippingLabel::dispatch($carrier);
 
         // Return the resource instead of the raw model
         return new CarrierResource($carrier);
