@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Carrier;
+use App\Exceptions\NoCarrierFoundException;
 
 class CarrierService
 {
@@ -11,8 +12,15 @@ class CarrierService
      */
     public function findCheapestCarrier(float $weight): ?Carrier
     {
-        return Carrier::where('max_weight', '>=', $weight)
-                    ->orderBy('price', 'asc')
+        $carrier = \App\Models\Carrier::where('max_weight', '>=', $weight)
+                    ->orderBy('price', 'asc')        // First priority: Lowest price
+                    ->orderBy('max_weight', 'desc')  // Tie-breaker: Highest capacity
                     ->first();
+
+        if (!$carrier) {
+            throw new NoCarrierFoundException();
+        }
+
+        return $carrier;
     }
 }
