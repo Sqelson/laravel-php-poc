@@ -9,6 +9,11 @@ use App\Http\Resources\CarrierResource;
 use App\Http\Requests\GetShipmentRateRequest;
 use App\Jobs\GenerateShippingLabel;
 
+/**
+ * @group Carrier Shipping
+ *
+ * APIs for managing and calculating shipping rates.
+ */
 class CarrierController extends Controller
 {
     protected $carrierService;
@@ -19,6 +24,13 @@ class CarrierController extends Controller
         $this->carrierService = $carrierService;
     }
 
+    /**
+     * Get Shipment Rate
+     *
+     * Calculate the cheapest carrier for a given shipment weight.
+     *
+     * @bodyParam weight float required The weight of the shipment. Example: 2.5
+     */
     public function getShipmentRate(GetShipmentRateRequest $request)
     {
         // Validation is handled automatically before this code even runs

@@ -1,0 +1,50 @@
+name: 'Carrier Shipping'
+description: |-
+
+  APIs for managing and calculating shipping rates.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/quote
+    metadata:
+      custom: []
+      groupName: 'Carrier Shipping'
+      groupDescription: |-
+
+        APIs for managing and calculating shipping rates.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Shipment Rate'
+      description: 'Calculate the cheapest carrier for a given shipment weight.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      weight:
+        custom: []
+        name: weight
+        description: 'The weight of the shipment.'
+        required: true
+        example: 2.5
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      weight: 2.5
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

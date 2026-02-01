@@ -23,7 +23,8 @@ class GetShipmentRateRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'weight' => 'required|numeric|min:0.1',
+            // The weight must be a positive number and cannot exceed 1000kg.
+            'weight' => 'required|numeric|min:0|max:1000',
         ];
     }
 }
