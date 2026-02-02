@@ -23,7 +23,7 @@ A logistics engine built with **Laravel 11**. This project demonstrates an appro
 ## Installation
 
 1. **Clone & Install:** 
-    git clone [your-repo-link] 
+    git clone https://github.com/Sqelson/laravel-php-poc.git
     composer install
 
 2. **Setup Environment:**
